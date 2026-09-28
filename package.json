@@ -1,17 +1,12 @@
 {
   "name": "ai-blognest-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
- "scripts": {
-  "start": "node server.js"
-}
+  "description": "AI BlogNest API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.1.0"
   }
 }
