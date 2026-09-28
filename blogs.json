@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "title": "Introduction to Artificial Intelligence",
+    "author": "Mithra",
+    "content": "AI helps computers perform tasks that normally require human intelligence."
+  },
+  {
+    "id": 2,
+    "title": "What is a REST API?",
+    "author": "Mithra",
+    "content": "A REST API allows applications to communicate using HTTP requests."
+  }
+]
