@@ -1,15 +1,12 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>AI BlogNest</title>
 
     <style>
-
         * {
             box-sizing: border-box;
         }
@@ -48,7 +45,7 @@
             padding: 40px;
             text-align: center;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
         .hero h2 {
@@ -90,7 +87,7 @@
             margin-top: 30px;
             padding: 25px;
             border-radius: 15px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
         }
 
         .tools h2 {
@@ -114,7 +111,6 @@
             font-size: 16px;
             background: white;
             color: #222;
-            display: block;
         }
 
         .blog-header {
@@ -138,7 +134,7 @@
             padding: 25px;
             margin-bottom: 18px;
             border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
         }
 
         .blog-card h3 {
@@ -195,7 +191,6 @@
         }
 
         @media (max-width: 700px) {
-
             .topic-box {
                 flex-direction: column;
             }
@@ -209,275 +204,223 @@
                 align-items: flex-start;
                 gap: 10px;
             }
-
         }
-
     </style>
 </head>
 
 <body>
 
-<header>
+    <header>
+        <h1>🤖 AI BlogNest</h1>
+        <p>Your Smart AI-Powered Blog Platform</p>
+    </header>
 
-    <h1>🤖 AI BlogNest</h1>
+    <div class="container">
 
-    <p>Your Smart AI-Powered Blog Platform</p>
+        <section class="hero">
+            <h2>Create Amazing Blogs with AI</h2>
+            <p>Enter a topic and generate creative blog content easily.</p>
 
-</header>
+            <div class="topic-box">
+                <input
+                    type="text"
+                    id="topic"
+                    placeholder="Enter your blog topic..."
+                >
 
+                <button onclick="generateBlog()">
+                    ✨ Generate Blog
+                </button>
+            </div>
 
-<div class="container">
+            <div id="result"></div>
+        </section>
 
-
-    <section class="hero">
-
-        <h2>Create Amazing Blogs with AI</h2>
-
-        <p>Enter a topic and generate creative blog content easily.</p>
-
-        <div class="topic-box">
+        <section class="tools">
+            <h2>🔎 Find Blogs</h2>
 
             <input
                 type="text"
-                id="topic"
-                placeholder="Enter your blog topic..."
+                id="searchInput"
+                class="search-box"
+                placeholder="🔍 Search blogs..."
+                onkeyup="filterBlogs()"
             >
 
-            <button onclick="generateBlog()">
-                ✨ Generate Blog
-            </button>
+            <select
+                id="categoryFilter"
+                class="category-filter"
+                onchange="filterBlogs()"
+            >
+                <option value="all">📂 ALL CATEGORIES</option>
+                <option value="Technology">💻 Technology</option>
+                <option value="AI">🤖 AI</option>
+                <option value="Education">📚 Education</option>
+                <option value="Programming">👨‍💻 Programming</option>
+            </select>
+        </section>
 
+        <div class="blog-header">
+            <h2>📚 Latest Blogs</h2>
+
+            <button
+                class="refresh-btn"
+                onclick="loadBlogs()"
+            >
+                🔄 Refresh Blogs
+            </button>
         </div>
 
-        <div id="result"></div>
+        <div id="blogs"></div>
 
-    </section>
+        <section class="features">
 
+            <div class="card">
+                <div>✨</div>
+                <h3>AI Generation</h3>
+                <p>Create blog content from any topic.</p>
+            </div>
 
-    <section class="tools">
+            <div class="card">
+                <div>🔍</div>
+                <h3>Easy Search</h3>
+                <p>Find your blogs quickly.</p>
+            </div>
 
-        <h2>🔎 Find Blogs</h2>
+            <div class="card">
+                <div>📱</div>
+                <h3>Responsive</h3>
+                <p>Works on desktop and mobile devices.</p>
+            </div>
 
-        <input
-            type="text"
-            id="searchInput"
-            class="search-box"
-            placeholder="🔍 Search blogs..."
-            onkeyup="filterBlogs()"
-        >
-
-        <select
-            id="categoryFilter"
-            class="category-filter"
-            onchange="filterBlogs()"
-        >
-
-            <option value="all">📂 ALL CATEGORIES</option>
-
-            <option value="Technology">💻 Technology</option>
-
-            <option value="AI">🤖 AI</option>
-
-            <option value="Education">📚 Education</option>
-
-            <option value="Programming">👨‍💻 Programming</option>
-
-        </select>
-
-    </section>
-
-
-    <div class="blog-header">
-
-        <h2>📚 Latest Blogs</h2>
-
-        <button
-            class="refresh-btn"
-            onclick="loadBlogs()"
-        >
-            🔄 Refresh Blogs
-        </button>
+        </section>
 
     </div>
 
+    <footer>
+        <p>© 2026 AI BlogNest | Created by Mithra</p>
+    </footer>
 
-    <div id="blogs"></div>
+    <script>
 
+        const API_URL = "https://ai-blognest-api-7.onrender.com/api/blogs";
 
-    <section class="features">
+        function generateBlog() {
 
-        <div class="card">
+            const topic = document.getElementById("topic").value.trim();
 
-            <div>✨</div>
+            if (topic === "") {
+                alert("Please enter a blog topic.");
+                return;
+            }
 
-            <h3>AI Generation</h3>
-
-            <p>Create blog content from any topic.</p>
-
-        </div>
-
-
-        <div class="card">
-
-            <div>🔍</div>
-
-            <h3>Easy Search</h3>
-
-            <p>Find your blogs quickly.</p>
-
-        </div>
-
-
-        <div class="card">
-
-            <div>📱</div>
-
-            <h3>Responsive</h3>
-
-            <p>Works on desktop and mobile devices.</p>
-
-        </div>
-
-    </section>
-
-</div>
-
-
-<footer>
-
-    <p>© 2026 AI BlogNest | Created by Mithra</p>
-
-</footer>
-
-
-<script>
-
-function generateBlog() {
-
-    const topic = document.getElementById("topic").value.trim();
-
-    if (topic === "") {
-
-        alert("Please enter a blog topic.");
-
-        return;
-
-    }
-
-    document.getElementById("result").innerHTML = `
-        <p>✨ Blog topic selected:
-        <strong>${topic}</strong></p>
-    `;
-}
-
-
-async function loadBlogs() {
-
-    try {
-
-        const response = await fetch("/api/blogs");
-
-        const blogs = await response.json();
-
-        const container = document.getElementById("blogs");
-
-        if (!blogs.length) {
-
-            container.innerHTML = `
-                <div class="no-blogs">
-                    <h3>No blogs available</h3>
-                    <p>Create your first blog to see it here.</p>
-                </div>
+            document.getElementById("result").innerHTML = `
+                <p>✨ Blog topic selected:
+                <strong>${topic}</strong></p>
             `;
-
-            return;
         }
 
-        container.innerHTML = blogs.map(blog => `
+        async function loadBlogs() {
 
-            <div
-                class="blog-card"
-                data-category="${blog.category || "Technology"}"
-            >
+            try {
 
-                <h3>${blog.title}</h3>
+                const response = await fetch(API_URL);
 
-                <div class="blog-author">
-                    ✍️ By ${blog.author || "Unknown Author"}
-                </div>
+                if (!response.ok) {
+                    throw new Error("API request failed");
+                }
 
-                <div class="category">
-                    📂 ${blog.category || "Technology"}
-                </div>
+                const blogs = await response.json();
 
-                <p class="blog-content">
-                    ${blog.content}
-                </p>
+                const container = document.getElementById("blogs");
 
-            </div>
+                if (!blogs.length) {
 
-        `).join("");
+                    container.innerHTML = `
+                        <div class="no-blogs">
+                            <h3>No blogs available</h3>
+                            <p>Create your first blog to see it here.</p>
+                        </div>
+                    `;
 
-    }
+                    return;
+                }
 
-    catch (error) {
+                container.innerHTML = blogs.map(blog => `
 
-        document.getElementById("blogs").innerHTML = `
-            <div class="no-blogs">
-                ❌ Unable to load blogs.
-            </div>
-        `;
+                    <div
+                        class="blog-card"
+                        data-category="${blog.category || "Technology"}"
+                    >
 
-    }
+                        <h3>${blog.title}</h3>
 
-}
+                        <div class="blog-author">
+                            ✍️ By ${blog.author || "Unknown Author"}
+                        </div>
 
+                        <div class="category">
+                            📂 ${blog.category || "Technology"}
+                        </div>
 
-function filterBlogs() {
+                        <p class="blog-content">
+                            ${blog.content}
+                        </p>
 
-    const searchText =
-        document.getElementById("searchInput").value.toLowerCase();
+                    </div>
 
-    const selectedCategory =
-        document.getElementById("categoryFilter").value;
+                `).join("");
 
-    const cards =
-        document.querySelectorAll(".blog-card");
+            }
 
-    cards.forEach(card => {
+            catch (error) {
 
-        const text = card.innerText.toLowerCase();
-
-        const category =
-            card.getAttribute("data-category");
-
-        const searchMatch =
-            text.includes(searchText);
-
-        const categoryMatch =
-            selectedCategory === "all" ||
-            category === selectedCategory;
-
-        if (searchMatch && categoryMatch) {
-
-            card.style.display = "block";
-
-        } else {
-
-            card.style.display = "none";
-
+                document.getElementById("blogs").innerHTML = `
+                    <div class="no-blogs">
+                        ❌ Unable to load blogs.
+                    </div>
+                `;
+            }
         }
 
-    });
+        function filterBlogs() {
 
-}
+            const searchText =
+                document.getElementById("searchInput").value.toLowerCase();
 
+            const selectedCategory =
+                document.getElementById("categoryFilter").value;
 
-loadBlogs();
+            const cards =
+                document.querySelectorAll(".blog-card");
 
-</script>
+            cards.forEach(card => {
+
+                const text = card.innerText.toLowerCase();
+
+                const category =
+                    card.getAttribute("data-category");
+
+                const searchMatch =
+                    text.includes(searchText);
+
+                const categoryMatch =
+                    selectedCategory === "all" ||
+                    category === selectedCategory;
+
+                if (searchMatch && categoryMatch) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+
+            });
+        }
+
+        loadBlogs();
+
+    </script>
 
 </body>
 
 </html>
-```
