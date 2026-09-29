@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.json());
 
-const filePath = "./data/blogs.json";
+const filePath = __dirname + "/data/blogs.json";
 
 // GET all blogs
 app.get("/api/blogs", (req, res) => {
