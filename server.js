@@ -7,12 +7,15 @@ app.use(express.json());
 
 const filePath = __dirname + "/data/blogs.json";
 
-// GET all blogs
+// Serve frontend
 app.use(express.static("public"));
 
-app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/public/index.html");
+// GET all blogs
+app.get("/api/blogs", (req, res) => {
+    const blogs = JSON.parse(fs.readFileSync(filePath));
+    res.json(blogs);
 });
+
 // GET one blog
 app.get("/api/blogs/:id", (req, res) => {
     const blogs = JSON.parse(fs.readFileSync(filePath));
@@ -36,7 +39,8 @@ app.post("/api/blogs", (req, res) => {
         id: blogs.length + 1,
         title: req.body.title,
         author: req.body.author,
-        content: req.body.content
+        content: req.body.content,
+        category: req.body.category
     };
 
     blogs.push(newBlog);
@@ -67,7 +71,8 @@ app.put("/api/blogs/:id", (req, res) => {
         id: blogs[index].id,
         title: req.body.title,
         author: req.body.author,
-        content: req.body.content
+        content: req.body.content,
+        category: req.body.category
     };
 
     fs.writeFileSync(filePath, JSON.stringify(blogs, null, 2));
@@ -102,15 +107,13 @@ app.delete("/api/blogs/:id", (req, res) => {
     });
 });
 
-// Home
+// Home page
 app.get("/", (req, res) => {
-    res.json({
-        message: "Welcome to AI BlogNest API"
-    });
+    res.sendFile(__dirname + "/public/index.html");
 });
 
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-    console.log(`AI BlogNest API is running on http://localhost:${PORT}`);
+    console.log(`AI BlogNest API is running on port ${PORT}`);
 });
