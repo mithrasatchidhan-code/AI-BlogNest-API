@@ -40,7 +40,7 @@ The API will run on:
 
 ## Live API
 
-https://ai-blognest-api-7.onrender.com
+`https://ai-blognest-api-7.onrender.com`
 
 ## Project Author
 
