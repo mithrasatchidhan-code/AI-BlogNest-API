@@ -8,11 +8,11 @@ app.use(express.json());
 const filePath = __dirname + "/data/blogs.json";
 
 // GET all blogs
-app.get("/api/blogs", (req, res) => {
-    const blogs = JSON.parse(fs.readFileSync(filePath));
-    res.json(blogs);
-});
+app.use(express.static("public"));
 
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/public/index.html");
+});
 // GET one blog
 app.get("/api/blogs/:id", (req, res) => {
     const blogs = JSON.parse(fs.readFileSync(filePath));
